@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: biblioteca-api
+  profiles:
+    default: dev
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+
+app:
+  cors:
+    origins: ${CORS_ORIGINS:http://localhost:5173}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:biblioteca;DB_CLOSE_DELAY=-1
+  h2:
+    console:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/biblioteca}
+    username: ${DB_USER:biblioteca}
+    password: ${DB_PASSWORD:biblioteca}
